@@ -34,29 +34,43 @@ UIScrollView 를 상속받고 있기 때문에 스크롤 통해 목록 보여주
 다시 그 셀을 보게 되면 dequeue  
 
 
-###### (4) UITableViewDelegate
+##### (4) UITableViewDelegate
 행의 액션 관리
 액세서리 뷰 지원
 테이블 뷰의 개별 행 편집 
 
 
--UIAlertController
-preferredStyle: .alert / .actionsheet
-Alert 스타일은 가운데에 뜨고 actionsheet는 밑에서 위로 올라오는 스타일
+- UIAlertController
+    - preferredStyle: .alert / .actionsheet
+    - Alert 스타일은 가운데에 뜨고 actionsheet는 밑에서 위로 올라오는 스타일
 
 UIAlertAction handler 
 버튼 클릭 시 action 을 클로저로 정의한다
 
+```swift
 
--UserDefaults
+let alert = UIAlertController(title: "My Alert", message: "This is an alert.", preferredStyle: .alert) 
+alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in 
+NSLog("The \"OK\" alert occured.")
+}))
+self.present(alert, animated: true, completion: nil)
+
+func addTextField(configurationHandler: ((UITextField) -> Void)? = nil)
+
+```
+https://developer.apple.com/documentation/uikit/uialertcontroller
+
+- UserDefaults
 Data 를 local에 저장한다.
 Runtime environment 위에서 동작
 앱이 실행되는 동안 기본 저장소에 저장 
 Key:value 로 저장되고, singleton 패턴이므로 애플리케이션 전체에 하나의 인스턴스가 존재한다.
 
+```swift
 UserDefaults.standard
 userDefaults.set(value, key)
 userDefaults.object(key)
+```
 
 
 #### 3) 새로 배운 것
@@ -68,6 +82,9 @@ tableView를 갱신해주기 위해 => reloadData() 메서드를 사용한다.
 - UIAlertController
 Alert view 를 화면에 표시하기 위해서는 다른 view 처럼 
 현재 컨트롤러에서 present 한다.
+After configuring the alert controller with the actions and style you want,
+present it using the present(_:animated:completion:) method.
+UIKit displays alerts and action sheets modally over your app's content
 
 - done button 
 
