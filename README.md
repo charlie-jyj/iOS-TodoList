@@ -16,6 +16,8 @@ UIScrollView 를 상속받고 있기 때문에 스크롤 통해 목록 보여주
 - 섹션을 이용해 행을 그룹화하여 콘텐츠를 좀더 쉽게 탐색
 - 섹션의 헤더와 푸터에 view 를 구성하여 추가 정보 표시 가능
 
+<img src="https://docs-assets.developer.apple.com/published/6da9972ff1/content-only~dark@2x.png">
+
 ##### (2) 구현 방법
 - Delegate 프로토콜 : tableview 의 동작과 외관 담당, view 는 delegate에 의존하여 업데이트된다 (행의 높이, 행 클릭 시 액션 정의)
 - DataSource : 데이터를 받아 뷰를 그려준다 (섹션은 몇개? 행은 몇개? 내용은 무엇?을 정의)
