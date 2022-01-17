@@ -1,13 +1,13 @@
-### 2. To-Do List 앱 만들기
+## To-Do List 앱 만들기
 
-#### 1) 사용 기능
+### 1) 사용 기능
 - TableView 에 할 일을 추가
 - TableView 할 일 삭제
 - TableView 할 일 재정렬
 - 할 일들을 데이터 저장소에 저장하여 앱을 재실행하여도 데이터 유지
 
-#### 2) 기본 개념
--UITableView
+### 2) 기본 개념
+#### (1) UITableView
 데이터를 목록 형태로 보여줄 수 있는 가장 기본적인 UI 컴포넌트
 UIScrollView 를 상속받고 있기 때문에 스크롤 통해 목록 보여주기 가능
 
@@ -40,7 +40,7 @@ UIScrollView 를 상속받고 있기 때문에 스크롤 통해 목록 보여주
 테이블 뷰의 개별 행 편집 
 
 
-- UIAlertController
+#### (2) UIAlertController
     - preferredStyle: .alert / .actionsheet
     - Alert 스타일은 가운데에 뜨고 actionsheet는 밑에서 위로 올라오는 스타일
 
@@ -60,7 +60,30 @@ func addTextField(configurationHandler: ((UITextField) -> Void)? = nil)
 ```
 https://developer.apple.com/documentation/uikit/uialertcontroller
 
-- UserDefaults
+#### (3) 재사용 메커니즘
+> Reuse Mechanism
+
+1. 테이블 뷰가 화면에 나타날 셀 객체를 데이터 소스에 요청
+2. 데이터 소스는 테이블 뷰의 재사용 큐 (Reuse Queue)에서 사용가능한 셀이 있는지 확인, 있으면 하나를 꺼내어 전달하고 없으면 새로 생성
+3. tableView(_:cellForRowAt:) 가 셀의 contents를 구성한 다음 반환하면 테이블 뷰는 이 셀을 받아 화면에 표시
+4. 사용자가 테이블 뷰를 스크롤 함에 따라 화면을 벗어난 셀은 테이블 뷰에서 제거되지만 완전히 삭제하지 않고 재사용 큐에 추가
+5. 스크롤에 따라 앞의 과정 반복
+
+- 재사용 식별자 
+    - 속성값
+    - 스토리 보드에서 프로토 타입 셀 설계 시 Identifier 항목에 입력
+- 셀 자체는 재사용하지만 콘텐츠는 cellForRowAt 메서드를 통해 매번 새롭게 구성
+    - 반복적으로 호출되는 메서드의 내부에는 네트워크 통신 등 처리 시간이 긴 로직을 포함하지 않는다
+    - 네트워크 통신을 통해 읽어온 데이터는 재사용할 수 있도록 캐싱(Caching) 처리하여 통신 횟수를 줄이는 것이 좋다. (메모이제이션)
+    - 네트워크 통신이나 시간이 오래 걸리는 코드를 사용할 때 비동기로 처리한다. (blocking 해결)
+    
+
+```swift
+
+let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+```
+
+#### (4) UserDefaults
 Data 를 local에 저장한다.
 Runtime environment 위에서 동작
 앱이 실행되는 동안 기본 저장소에 저장 
